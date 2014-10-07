@@ -1,6 +1,12 @@
 require 'webrick'
+root_path = File.path(".")
+server = WEBrick::HTTPServer.new Port: 3000, DocumentRoot: root_path
 
-# http://www.ruby-doc.org/stdlib-2.0/libdoc/webrick/rdoc/WEBrick.html
-# http://www.ruby-doc.org/stdlib-2.0/libdoc/webrick/rdoc/WEBrick/HTTPRequest.html
-# http://www.ruby-doc.org/stdlib-2.0/libdoc/webrick/rdoc/WEBrick/HTTPResponse.html
-# http://www.ruby-doc.org/stdlib-2.0/libdoc/webrick/rdoc/WEBrick/Cookie.html
+
+server.mount_proc '/' do |request, response|
+  response.content_type = "text/text"
+  response.body = root_path
+end
+
+trap('INT') { server.shutdown }
+server.start

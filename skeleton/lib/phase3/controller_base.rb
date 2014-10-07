@@ -9,7 +9,10 @@ module Phase3
     def render(template_name)
       file_name = template_name.to_s
       directory_name = self.class.to_s.singularize.tableize.singularize
-      content = File.read("views/#{directory_name}/#{file_name}.html.erb")
+      file = File.read("views/#{directory_name}/#{file_name}.html.erb")
+      template = ERB.new(file)
+      content = template.result(binding)
+
       render_content(content, "text/html")
     end
   end

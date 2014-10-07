@@ -7,7 +7,7 @@ module Phase5
     # 2. post body
     # 3. route params
     def initialize(req, route_params = {})
-      @params = {}
+      @params = route_params
       query = req.query_string
       if query
         req_params = URI::decode_www_form(query)
